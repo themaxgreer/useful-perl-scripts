@@ -1,18 +1,20 @@
 #!/usr/bin/perl -w
+use strict;
+use warnings;
 
 #add this script to your download folder
 
 sub moveFile{
 	my ($tag,@files) = @_;
-	foreach $file (@files) {
-   		#remove print at end
-		print "$file\n";
+	foreach my $file (@files) {
    		if(-f $file) {
 			system("mv $file $tag");
    		}
-   		if(-d $file) {
+   		elsif(-d $file) {
 			system("mv -v \"$file\" $tag");
-  		 }
+  		}
+   		#print so you know where the files are going
+		print "$file to $tag\n";
 	}
 	
 }
@@ -20,18 +22,18 @@ sub moveFile{
 opendir(DIR, ".");
 
 #all files
-@allFiles = grep !/^\./, readdir(DIR);
+my @allFiles = grep !/^\./, readdir(DIR);
 
 #Tag declarations
 #add more tags for different folders
-$tvTag = 'TV/.';
-$movieTag = 'Movies/.';
+my $tvTag = 'TV/.';
+my $movieTag = 'Movies/.';
 
 #get files
-@files = grep(/[Pp]arks/,@allFiles);
+my @files = grep(/[Pp]arks/,@allFiles);
 moveFile($tvTag,@files);
 
-@movieFiles = grep(/[Mm]atrix/,@allFiles);
+my @movieFiles = grep(/[Mm]atrix/,@allFiles);
 moveFile($movieTag,@movieFiles);
 
 #close directory
