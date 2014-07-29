@@ -7,14 +7,15 @@ use warnings;
 sub moveFile{
 	my ($tag,@files) = @_;
 	foreach my $file (@files) {
-   		if(-f $file) {
-			system("mv $file $tag");
+		#will print where the file goes as well
+		if(-f $file) { 
+			#it is a file
+			system("mv -v $file $tag"); 		
    		}
    		elsif(-d $file) {
+			#it is a directory
 			system("mv -v \"$file\" $tag");
   		}
-   		#print so you know where the files are going
-		print "$file to $tag\n";
 	}
 	
 }
@@ -26,8 +27,8 @@ my @allFiles = grep !/^\./, readdir(DIR);
 
 #Tag declarations
 #add more tags for different folders
-my $tvTag = 'TV/.';
-my $movieTag = 'Movies/.';
+my $tvTag = 'TV/';
+my $movieTag = 'Movies/';
 
 #get files
 my @files = grep(/[Pp]arks/,@allFiles);
